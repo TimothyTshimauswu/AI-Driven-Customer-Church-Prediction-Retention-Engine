@@ -6,7 +6,7 @@
 **Author**: Saurabh Badole  
 **Platform**: Kaggle  
 **URL**: https://www.kaggle.com/datasets/saurabhbadole/bank-customer-churn-prediction-dataset  
-**Download Date**: [Your download date]  
+**Download Date**: [20-10-2025]  
 **Original License**: Please refer to Kaggle dataset page for licensing terms
 
 ## Dataset Description
@@ -55,7 +55,7 @@ This project adapts the original European dataset to reflect a South African ban
 - Fields converted:
   - Balance → Balance_ZAR
   - EstimatedSalary → AnnualSalary_ZAR, MonthlySalary_ZAR
-- Realistic salary ranges for SA market:
+- Realistic salary ranges for the SA market:
   - Entry level: R200K - R600K annually
   - Mid-level: R600K - R1.5M annually
   - Senior/Executive: R1.5M - R5M+ annually
@@ -211,27 +211,6 @@ If you use this transformed dataset, please cite both:
 
 2. **Transformation**:
    ```
-   [Your Name] (2024). South African Banking Context Adaptation of 
-   Bank Customer Churn Dataset. GitHub: [Your Repository URL]
+   [Timothy] (2025). South African Banking Context Adaptation of 
+   Bank Customer Churn Dataset. GitHub: [https://github.com/TimothyTshimauswu/AI-Driven-Customer-Church-Prediction-Retention-Engine]
    ```
-
-## Version History
-
-| Version | Date | Changes |
-|---------|------|---------|
-| 1.0 | [Date] | Initial SA transformation with 9 provinces, 45 cities, 11 languages |
-| 1.1 | [Date] | Added digital banking features (mobile, internet adoption) |
-| 1.2 | [Date] | Enhanced product portfolio (8 product types) |
-| Current | Dec 2024 | Comprehensive feature set with 43 variables |
-
-## Contact
-
-For questions about the transformation methodology or dataset usage:
-- **Email**: [Your Email]
-- **GitHub**: [Your GitHub Profile]
-- **LinkedIn**: [Your LinkedIn Profile]
-
----
-
-**Last Updated**: December 2024  
-**Maintained By**: Timothy [Your Last Name]
