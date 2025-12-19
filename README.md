@@ -1,4 +1,4 @@
-# FNB Customer Churn Prediction: Data-Driven Retention Strategy
+# Case Study Project: FNB Customer Churn Prediction: Data-Driven Retention Strategy
 
 <div align="center">
 
