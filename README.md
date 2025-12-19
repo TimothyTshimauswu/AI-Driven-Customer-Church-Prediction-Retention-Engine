@@ -114,10 +114,24 @@ graph TD
 ## 📊 Project Overview
 
 ### **Dataset**
-- **Size**: 10,000 FNB customer records
-- **Features**: 43 variables across 6 categories (Demographics, Banking, Products, Financial, Engagement, Target)
-- **Context**: South African banking market with localized features (provinces, local banks, ZAR currency)
-- **Target Variable**: Binary churn indicator (Churned: 20.4%, Retained: 79.6%)
+**Original Source**: [Bank Customer Churn Prediction Dataset](https://www.kaggle.com/datasets/saurabhbadole/bank-customer-churn-prediction-dataset) by Saurabh Badole (European banking)
+
+**Transformation**: Adapted to the South African context for FNB (First National Bank)
+
+**Key Localizations**:
+- 🗺️ **Geography**: 9 SA provinces (Gauteng, Western Cape, KZN, etc.) + 45 cities
+- 💰 **Currency**: EUR → ZAR (South African Rand)
+- 🗣️ **Languages**: 11 official SA languages (isiZulu, isiXhosa, Afrikaans, English, etc.)
+- 🏦 **Products**: SA banking portfolio (savings, cheque, credit cards, home loans, vehicle finance)
+- 📱 **Digital**: Mobile banking (80.6%) & internet banking (70.0%) adoption metrics
+
+**Dataset Specifications**:
+- 📊 **Size**: 10,000 customer records
+- 🔢 **Features**: 43 variables (demographics, banking, products, financial, engagement)
+- 🎯 **Target**: Churn rate of 20.4% (2,037 churned customers)
+- ✅ **Quality**: No missing values, no duplicates
+
+**Purpose**: Portfolio project demonstrating data localization and SA market relevance while maintaining statistical integrity
 
 ### **Analytical Approach**
 
