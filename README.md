@@ -199,41 +199,69 @@ Five-pillar intervention strategy with measurable ROI:
 4. VIP relationship management (white-glove service for top-tier customers): R44M CLV protected, 230% ROI
 5. ML-powered early warning system (automated intervention triggers by risk tier)
 
-**Business Intelligence Dashboards**
 
-Developed Power BI analytics suite (400+ DAX measures) for multi-stakeholder decision support:
+---
+## Business Intelligence Dashboards
 
-**Executive Churn Overview Dashboard**
-- Real-time KPIs: churn rate trends, CLV exposure, customer counts
-- 12-month trend analysis with moving averages and benchmark targets
-- Provincial risk heatmaps and value segment distribution
+Developed comprehensive Power BI analytics suite with 50+ DAX measures for strategic and operational decision-making across FNB stakeholders.
+
+### **Dashboard 1: Executive Overview**
+Strategic command center for C-suite and senior management focusing on high-level KPIs and key churn drivers.
+
+**Key Features:**
+- **Performance KPIs**: Total customers (10K), churn rate (20.4%), CLV at risk (R578.5M), projected ROI (1,604%)
+- **Age Cohort Analysis**: Identifies 46-55 age group with critical 50.6% churn rate vs 20.4% baseline
+- **Geographic Concentration**: Provincial heatmap highlighting Limpopo (33.9%), Eastern Cape (32.1%), and Mpumalanga (30.9%) as high-risk regions
+- **Product Complexity Paradox**: U-shaped churn pattern showing 2-product customers optimal (7.6% churn) vs 3-4 products catastrophic (83-100% churn)
+- **Risk Segmentation**: Donut chart and CLV exposure by tier (Low/Medium/High/Critical) for intervention prioritization
+- **Interactive Filters**: Province, age group, risk category, and product count slicers for dynamic analysis
 
 ![Executive Dashboard](./assets/dashboard_executive_overview.png)
-*C-suite dashboard: churn trends, CLV at risk, and provincial performance—enables strategic resource allocation*
+*Strategic overview enabling data-driven resource allocation and executive decision-making*
 
-**Customer Risk Profile Dashboard**
-- High-risk customer tables with sortable risk scores and churn probabilities
-- Intervention tracking by risk tier with conversion rate analytics
-- Driver analysis showing feature contributions to individual customer risk
+**Business Impact:**
+- Quantifies R390.3M CLV concentration in High/Critical risk tiers (67.5% of total exposure)
+- Validates targeting 2,939 customers (29.4% of base) to protect two-thirds of revenue at risk
+- Provides ROI justification: R5.9M intervention cost for R36M CLV saved = 510% ROI
 
-![Risk Profile Dashboard](./assets/dashboard_risk_profile.png)
-*Operational tool for retention teams: prioritized customer lists, intervention tracking, and real-time campaign performance*
+---
 
-**Product & Engagement Analytics Dashboard**
-- Product-level churn rates and penetration-retention matrices
-- Cross-sell opportunity scoring and next-best-product recommendations
-- Tenure cohort analysis and customer lifecycle survival curves
+### **Dashboard 2: Deep Dive Analysis**
+Operational intelligence for retention teams and analysts with customer-level insights and actionable intervention priorities.
 
-![Product Dashboard](./assets/dashboard_product_analytics.png)
-*Product performance insights: identifies optimal product bundles and flags high-risk product combinations for portfolio review*
+**Key Features:**
+- **Critical Alert Banner**: Personal loan crisis indicator (85.9% churn, 326 customers) demanding immediate product review
+- **High-Risk Customer Table**: Sortable list of 2,939 High/Critical risk customers with individual CLV values, demographics, and risk badges
+- **Customer Search**: Direct lookup by Customer ID for rapid account investigation
+- **Key Risk Metrics Cards**: 
+  - Personal Loan holders: 85.9% churn
+  - 46-55 age cohort: 50.6% churn (660 of 1,311 customers)
+  - 4-product customers: 100% churn (complete failure)
+  - High/Critical risk CLV: R390M exposure
+- **Gender Disparity Analysis**: Female 25.1% vs Male 16.5% (8.6pp gap, χ²=112.92, p<0.0001)
+- **Feature Importance**: Top 10 model drivers ranked by predictive power (Age, Personal Loan, Product Count lead)
+- **Tenure Cohort Analysis**: Flat 19-23% churn across all tenure groups validates non-temporal churn drivers
+- **Product-Specific Performance**: Individual product churn rates highlighting credit card protection (12.8%) vs personal loan crisis (85.9%)
 
-**Geographic & Demographic Intelligence Dashboard**
-- Branch-level performance with city and province drill-down
-- Market opportunity quadrants (customer volume vs churn rate)
-- Demographic churn patterns by age, gender, education, and employment
+![Deep Dive Dashboard](./assets/dashboard_deep_dive_analysis.png)
+*Tactical tool enabling prioritized customer outreach, campaign effectiveness tracking, and portfolio optimization*
 
-![Geographic Dashboard](./assets/dashboard_geographic_intelligence.png)
-*Regional strategy tool: maps market-specific churn drivers and ROI potential for geographic expansion or consolidation*
+**Operational Value:**
+- Enables white-glove intervention for 459 Critical Risk customers (R118.4M CLV exposure)
+- Provides data-backed justification for personal loan product suspension/redesign
+- Supports gender-specific retention strategy development (Female customers 52% higher churn)
+- Identifies optimal 2-product cross-sell strategy while flagging dangerous 3-4 product over-banking
+
+---
+
+### **Technical Implementation**
+- **Platform**: Power BI Desktop with custom FNB brand theme
+- **Data Source**: Engineered features from Notebook 03 (25+ derived features including risk scores, CLV estimates, age/product/geographic flags)
+- **DAX Measures**: 50+ calculated measures for metrics, conditional formatting, and dynamic segmentation
+- **Interactivity**: Cross-filtering between all visuals, drill-through from customer table, multi-select slicers
+- **Color Scheme**: FNB brand palette (Ateneo Blue #003876, Yellow #FFD700, Alabama Crimson #A80532, Teal #008080)
+- **Refresh**: Automated monthly refresh aligned with model retraining schedule
+
 
 **Implementation Roadmap**
 
