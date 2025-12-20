@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard 2: Deep Dive Analysis - FNB Customer Churn</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .dashboard {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #003D7A 0%, #0056a8 100%);
+            color: white;
+            padding: 25px 30px;
+            border-radius: 8px 8px 0 0;
+            margin: -30px -30px 30px -30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .header .subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        .search-box {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-size: 14px;
+            border: none;
+            color: white;
+            width: 250px;
+        }
+
+        .search-box::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Alert Banner */
+        .alert-banner {
+            background: linear-gradient(135deg, #DC3545 0%, #ff4d5e 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .alert-icon {
+            font-size: 32px;
+        }
+
+        .alert-content {
+            flex: 1;
+        }
+
+        .alert-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .alert-text {
+            font-size: 13px;
+            opacity: 0.95;
+        }
+
+        .alert-value {
+            font-size: 42px;
+            font-weight: 700;
+            text-align: right;
+        }
+
+        /* Main Grid */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Customer Table */
+        .table-container {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .table-header {
+            background: #003D7A;
+            color: white;
+            padding: 15px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-count {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f8f9fa;
+            padding: 12px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 13px;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .risk-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .risk-critical {
+            background: #DC3545;
+            color: white;
+        }
+
+        .risk-high {
+            background: #FFA500;
+            color: white;
+        }
+
+        .risk-medium {
+            background: #FFB81C;
+            color: #333;
+        }
+
+        .risk-low {
+            background: #28A745;
+            color: white;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            gap: 15px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .stat-card.critical {
+            border-color: #DC3545;
+            background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+        }
+
+        .stat-title {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #003D7A;
+            margin-bottom: 5px;
+        }
+
+        .stat-card.critical .stat-value {
+            color: #DC3545;
+        }
+
+        .stat-subtitle {
+            font-size: 12px;
+            color: #999;
+        }
+
+        /* Charts */
+        .charts-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .chart-container {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .chart-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #FFB81C;
+        }
+
+        /* Gender Chart */
+        .gender-chart {
+            padding: 20px 0;
+        }
+
+        .gender-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .gender-label {
+            width: 80px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .gender-bar {
+            flex: 1;
+            height: 40px;
+            background: linear-gradient(to right, #003D7A, #0056a8);
+            border-radius: 6px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+        }
+
+        .gender-bar.female {
+            background: linear-gradient(to right, #DC3545, #ff4d5e);
+        }
+
+        .gender-value {
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .gender-gap {
+            margin-top: 15px;
+            padding: 15px;
+            background: #fff3cd;
+            border-left: 4px solid #FFB81C;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .gap-highlight {
+            font-size: 18px;
+            font-weight: 700;
+            color: #DC3545;
+        }
+
+        /* Feature Importance */
+        .feature-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 10px 0;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .feature-rank {
+            width: 25px;
+            height: 25px;
+            background: #FFB81C;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .feature-name {
+            flex: 1;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .feature-bar-wrapper {
+            width: 150px;
+        }
+
+        .feature-bar {
+            height: 20px;
+            background: linear-gradient(to right, #003D7A, #0056a8);
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .feature-score {
+            position: absolute;
+            right: -35px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 11px;
+            color: #666;
+            font-weight: 600;
+        }
+
+        /* Tenure Analysis */
+        .tenure-bars {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 200px;
+            padding: 10px 0;
+        }
+
+        .tenure-bar {
+            width: 16%;
+            background: linear-gradient(to top, #003D7A, #0056a8);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+        }
+
+        .tenure-bar-label {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            color: #666;
+            text-align: center;
+            width: 100%;
+        }
+
+        .tenure-bar-value {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        /* Product Detail */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            padding: 10px 0;
+        }
+
+        .product-card {
+            background: #f8f9fa;
+            border-radius: 6px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .product-card.alert {
+            background: #fff5f5;
+            border: 2px solid #DC3545;
+        }
+
+        .product-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .product-name {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .product-churn {
+            font-size: 24px;
+            font-weight: 700;
+            color: #003D7A;
+        }
+
+        .product-card.alert .product-churn {
+            color: #DC3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="header">
+            <div>
+                <h1>FNB CUSTOMER CHURN ANALYSIS</h1>
+                <div class="subtitle">Deep Dive Analysis Dashboard</div>
+            </div>
+            <input type="text" class="search-box" placeholder="🔍 Search Customer ID...">
+        </div>
+
+        <!-- Alert Banner -->
+        <div class="alert-banner">
+            <div class="alert-icon">⚠️</div>
+            <div class="alert-content">
+                <div class="alert-title">CRITICAL: Personal Loan Product Crisis</div>
+                <div class="alert-text">Personal loan holders showing catastrophic churn rate - immediate product review required</div>
+            </div>
+            <div class="alert-value">85.9%</div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="main-grid">
+            <!-- High Risk Customer Table -->
+            <div class="table-container">
+                <div class="table-header">
+                    <span>High-Risk Customers</span>
+                    <span class="table-count">2,939 customers (29.4% of base)</span>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Customer ID</th>
+                            <th>Age</th>
+                            <th>Province</th>
+                            <th>Products</th>
+                            <th>CLV (5yr)</th>
+                            <th>Risk</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>15647892</td>
+                            <td>52</td>
+                            <td>Limpopo</td>
+                            <td>3</td>
+                            <td>R3.2M</td>
+                            <td><span class="risk-badge risk-critical">Critical</span></td>
+                        </tr>
+                        <tr>
+                            <td>15698234</td>
+                            <td>48</td>
+                            <td>Eastern Cape</td>
+                            <td>4</td>
+                            <td>R2.8M</td>
+                            <td><span class="risk-badge risk-critical">Critical</span></td>
+                        </tr>
+                        <tr>
+                            <td>15712456</td>
+                            <td>51</td>
+                            <td>Mpumalanga</td>
+                            <td>3</td>
+                            <td>R2.6M</td>
+                            <td><span class="risk-badge risk-critical">Critical</span></td>
+                        </tr>
+                        <tr>
+                            <td>15634789</td>
+                            <td>47</td>
+                            <td>Gauteng</td>
+                            <td>1</td>
+                            <td>R2.4M</td>
+                            <td><span class="risk-badge risk-high">High</span></td>
+                        </tr>
+                        <tr>
+                            <td>15689012</td>
+                            <td>49</td>
+                            <td>Limpopo</td>
+                            <td>2</td>
+                            <td>R2.2M</td>
+                            <td><span class="risk-badge risk-high">High</span></td>
+                        </tr>
+                        <tr>
+                            <td>15723456</td>
+                            <td>46</td>
+                            <td>Western Cape</td>
+                            <td>1</td>
+                            <td>R2.1M</td>
+                            <td><span class="risk-badge risk-high">High</span></td>
+                        </tr>
+                        <tr>
+                            <td>15667890</td>
+                            <td>53</td>
+                            <td>KwaZulu-Natal</td>
+                            <td>3</td>
+                            <td>R1.9M</td>
+                            <td><span class="risk-badge risk-critical">Critical</span></td>
+                        </tr>
+                        <tr>
+                            <td>15701234</td>
+                            <td>50</td>
+                            <td>Free State</td>
+                            <td>1</td>
+                            <td>R1.8M</td>
+                            <td><span class="risk-badge risk-high">High</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card critical">
+                    <div class="stat-title">Personal Loan Churn</div>
+                    <div class="stat-value">85.9%</div>
+                    <div class="stat-subtitle">326 customers affected</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">46-55 Age Cohort</div>
+                    <div class="stat-value">50.6%</div>
+                    <div class="stat-subtitle">1,311 customers, 660 churned</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">4 Products Churn</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-subtitle">60 customers, complete failure</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">High/Critical Risk</div>
+                    <div class="stat-value">R390M</div>
+                    <div class="stat-subtitle">CLV exposure (67.5%)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row 1 -->
+        <div class="charts-row">
+            <!-- Gender Analysis -->
+            <div class="chart-container">
+                <div class="chart-title">Gender Churn Disparity</div>
+                <div class="gender-chart">
+                    <div class="gender-row">
+                        <div class="gender-label">Female</div>
+                        <div class="gender-bar female" style="width: 80%">
+                            <div class="gender-value">25.1%</div>
+                        </div>
+                    </div>
+                    <div class="gender-row">
+                        <div class="gender-label">Male</div>
+                        <div class="gender-bar" style="width: 53%">
+                            <div class="gender-value">16.5%</div>
+                        </div>
+                    </div>
+                    <div class="gender-gap">
+                        Gender gap: <span class="gap-highlight">8.6pp</span> (Female churn 52% higher than male)
+                        <br>χ²=112.92, p<0.0001 (statistically significant)
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature Importance -->
+            <div class="chart-container">
+                <div class="chart-title">Top 10 Churn Drivers (Model Features)</div>
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <div class="feature-rank">1</div>
+                        <div class="feature-name">Age</div>
+                        <div class="feature-bar-wrapper">
+                            <div class="feature-bar" style="width: 100%">
+                                <div class="feature-score">0.28</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-rank">2</div>
+                        <div class="feature-name">Personal Loan Flag</div>
+                        <div class="feature-bar-wrapper">
+                            <div class="feature-bar" style="width: 95%">
+                                <div class="feature-score">0.30</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-rank">3</div>
+                        <div class="feature-name">Product Count</div>
+                        <div class="feature-bar-wrapper">
+                            <div class="feature-bar" style="width: 75%">
+                                <div class="feature-score">0.21</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-rank">4</div>
+                        <div class="feature-name">Balance (ZAR)</div>
+                        <div class="feature-bar-wrapper">
+                            <div class="feature-bar" style="width: 65%">
+                                <div class="feature-score">0.18</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-rank">5</div>
+                        <div class="feature-name">Active Member Status</div>
+                        <div class="feature-bar-wrapper">
+                            <div class="feature-bar" style="width: 58%">
+                                <div class="feature-score">0.16</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-rank">6</div>
+                        <div class="feature-name">Province (High-Risk)</div>
+                        <div class="feature-bar-wrapper">
+                            <div class="feature-bar" style="width: 50%">
+                                <div class="feature-score">0.14</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-rank">7</div>
+                        <div class="feature-name">Gender</div>
+                        <div class="feature-bar-wrapper">
+                            <div class="feature-bar" style="width: 42%">
+                                <div class="feature-score">0.12</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-rank">8</div>
+                        <div class="feature-name">Composite Risk Score</div>
+                        <div class="feature-bar-wrapper">
+                            <div class="feature-bar" style="width: 35%">
+                                <div class="feature-score">0.10</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row 2 -->
+        <div class="charts-row">
+            <!-- Tenure Cohorts -->
+            <div class="chart-container">
+                <div class="chart-title">Churn by Tenure Cohort (Flat Pattern)</div>
+                <div class="tenure-bars">
+                    <div class="tenure-bar" style="height: 60%">
+                        <div class="tenure-bar-value">23.0%</div>
+                        <div class="tenure-bar-label">0-1<br>years</div>
+                    </div>
+                    <div class="tenure-bar" style="height: 52%">
+                        <div class="tenure-bar-value">20.0%</div>
+                        <div class="tenure-bar-label">2-3<br>years</div>
+                    </div>
+                    <div class="tenure-bar" style="height: 55%">
+                        <div class="tenure-bar-value">21.0%</div>
+                        <div class="tenure-bar-label">4-5<br>years</div>
+                    </div>
+                    <div class="tenure-bar" style="height: 50%">
+                        <div class="tenure-bar-value">19.0%</div>
+                        <div class="tenure-bar-label">6-7<br>years</div>
+                    </div>
+                    <div class="tenure-bar" style="height: 52%">
+                        <div class="tenure-bar-value">20.0%</div>
+                        <div class="tenure-bar-label">8-10<br>years</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Detail -->
+            <div class="chart-container">
+                <div class="chart-title">Product-Specific Churn Rates</div>
+                <div class="product-grid">
+                    <div class="product-card alert">
+                        <div class="product-icon">💳</div>
+                        <div class="product-name">Personal Loan</div>
+                        <div class="product-churn">85.9%</div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-icon">🏠</div>
+                        <div class="product-name">Home Loan</div>
+                        <div class="product-churn">20.3%</div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-icon">🚗</div>
+                        <div class="product-name">Vehicle Finance</div>
+                        <div class="product-churn">20.1%</div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-icon">💰</div>
+                        <div class="product-name">Investment</div>
+                        <div class="product-churn">21.7%</div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-icon">💎</div>
+                        <div class="product-name">Credit Card</div>
+                        <div class="product-churn">12.8%</div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-icon">✅</div>
+                        <div class="product-name">Cheque Account</div>
+                        <div class="product-churn">20.0%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
