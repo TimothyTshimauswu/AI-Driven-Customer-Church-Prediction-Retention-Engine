@@ -13,9 +13,9 @@
 ---
 ## Executive Summary
 
-**Context**: This project transforms a European bank customer dataset into a South African retail banking case study, positioning it as an FNB churn prediction and retention optimization initiative. I re-engineered the original 10,000-customer dataset to reflect SA market conditions—localizing geography, currency, products, and digital banking behaviors—creating a realistic foundation for advanced analytics.
+**Context**: This project transforms a European bank customer dataset into a South African retail banking case study, positioning it as an FNB churn prediction and retention optimization initiative. I re-engineered the original 10,000-customer dataset to reflect SA market conditions, localizing geography, currency, products, and digital banking behaviors—creating a realistic foundation for advanced analytics.
 
-**Business Problem**: FNB faced a customer retention crisis with 20.4% annual churn, representing R578.5M in at-risk customer lifetime value. Traditional reactive retention strategies lacked predictive capability to identify high-risk customers or quantify revenue exposure across segments.
+**Business Problem**: FNB faced a customer retention crisis, with 20.4% annual churn, resulting in R578.5M in at-risk customer lifetime value. Traditional reactive retention strategies lacked predictive capability to identify high-risk customers or quantify revenue exposure across segments.
 
 **Solution**: I developed an end-to-end churn prediction pipeline combining statistical analysis, feature engineering, and machine learning to build actionable risk profiles. The solution delivers executive dashboards, customer-level risk scores, and intervention prioritization frameworks designed for business stakeholders.
 
