@@ -1,5 +1,4 @@
-# Case Study Project: FNB Customer Churn Prediction: Data-Driven Retention Strategy
-
+# Case Study Project:FNB Customer Churn Prediction & Retention Analytics
 <div align="center">
 
 ![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
@@ -12,8 +11,6 @@
 </div>
 
 ---
-# FNB Customer Churn Prediction & Retention Analytics
-
 ## Executive Summary
 
 **Context**: This project transforms a European bank customer dataset into a South African retail banking case study, positioning it as an FNB churn prediction and retention optimization initiative. I re-engineered the original 10,000-customer dataset to reflect SA market conditions—localizing geography, currency, products, and digital banking behaviors—creating a realistic foundation for advanced analytics.
