@@ -1,13 +1,22 @@
-# Case Study Project:FNB Customer Churn Prediction & Retention Analytics
+# FNB Customer Churn Prediction & Retention Analytics
+
 <div align="center">
 
-![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
-![Pandas](https://img.shields.io/badge/Pandas-Data%20Analysis-green.svg)
-![Power BI](https://img.shields.io/badge/Power%20BI-Dashboards-yellow.svg)
-![Machine Learning](https://img.shields.io/badge/ML-Predictive%20Analytics-red.svg)
-![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen.svg)
+![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![XGBoost](https://img.shields.io/badge/XGBoost-ML-FF6600?style=for-the-badge)
+![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)
+![SMOTE](https://img.shields.io/badge/SMOTE-Imbalanced%20Data-2ea44f?style=for-the-badge)
+![CLV](https://img.shields.io/badge/CLV-Modeling-00B4D8?style=for-the-badge)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white)
+
+![GitHub stars](https://img.shields.io/github/stars/TimothyTshimauswu/FNB-Customer-Churn-Prediction-Retention-Analytics?style=social)
+![GitHub forks](https://img.shields.io/github/forks/TimothyTshimauswu/FNB-Customer-Churn-Prediction-Retention-Analytics?style=social)
 
 **Saving R578.5M in At-Risk Customer Lifetime Value Through Predictive Analytics**
+
+[![View Repository](https://img.shields.io/badge/View-Repository-181717?style=for-the-badge&logo=github)](https://github.com/TimothyTshimauswu/FNB-Customer-Churn-Prediction-Retention-Analytics)
+[![Read Documentation](https://img.shields.io/badge/Read-Documentation-blue?style=for-the-badge)](https://github.com/TimothyTshimauswu/FNB-Customer-Churn-Prediction-Retention-Analytics#readme)
+
 </div>
 
 ---
